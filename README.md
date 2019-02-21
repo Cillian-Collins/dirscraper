@@ -8,19 +8,27 @@ Dirscraper works by initially visiting the domain provided by the user. From the
 ## Installation
 To install dirscraper, simply download the python file and make your in the terminal to the directory containing the file. From ther, run the following installation command:
 
-  pip install -r requirements.txt
+```
+$ pip install -r requirements.txt
+```
   
 ## Running the program
 To run the program, you will need to open the directory containing the file with your terminal. From there, run the following command containing the URL of the site you wish to scan:
 
-  python dirscraper.py -u <URL>
-  
+```
+$ python dirscraper.py -u <URL>
+```
+
 ## Outputting to a file
 When outputting to a file, you must select a filename (if it already exists, it will append results to the bottom, if it doesn't exist it will create the new file). This flag is optional.
 
-  python dirscraper.py -u <URL> -o <FILE>
-  
+```
+$ python dirscraper.py -u <URL> -o <FILE>
+```
+
 ## Silent mode
 If you are scanning a website and do not wish to see the results displayed in the terminal, then you can set this flag. If you are not outputting to a file, then using this flag will make it impossible to see your results. This flag is optional.
 
-  python dirscraper.py -u <URL> -o <FILE> -s
+```
+$ python dirscraper.py -u <URL> -o <FILE> -s
+```
