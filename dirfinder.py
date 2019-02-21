@@ -17,6 +17,7 @@ print("     _ _                              _____      \n  __| (_)_ __ ___  ___
 parser = argparse.ArgumentParser(description='Extract GET parameters from javascript files.')
 parser.add_argument('-u', help='URL of the website to scan.')
 parser.add_argument('-o', help='Output file (for results).', nargs="?")
+parser.add_argument('-s', help='Silent mode (results not printed).', action="store_true")
 args = parser.parse_args()
 
 linkArr = [args.u]
@@ -57,4 +58,10 @@ for link in linkArr:
                 pass
 
 for directory in list(set(dirArr)):
-    print(directory)
+    if args.o:
+        output = open(args.o, "a")
+        output.write(directory + "\n")
+    if args.s:
+        pass
+    else:
+        print(directory)
