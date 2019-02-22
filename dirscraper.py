@@ -22,6 +22,7 @@ parser.add_argument('-d', help='Includes domain name in output.', action="store_
 
 args = parser.parse_args()
 
+linkArr = [args.u]
 dirArr = []
 url = args.u + "/"
 r = requests.get(url)
@@ -62,19 +63,13 @@ for directory in list(set(dirArr)):
     if args.o:
         output = open(args.o, "a")
         if args.d:
-            if args.u[len(args.u) - 1] == "/":
-                output.write(args.u[0:len(args.u) - 1] + directory + "\n")
-            else:
-                output.write(args.u + directory + "\n")
+            output.write(args.u.split("/")[0] + "//" + args.u.split("/")[2] + directory + "\n")
         else:
             output.write(directory + "\n")
     if args.s:
         pass
     else:
         if args.d:
-            if args.u[len(args.u) - 1] == "/":
-                print(args.u[0:len(args.u) - 1] + directory)
-            else:
-                print(args.u + directory)
+            print(args.u.split("/")[0] + "//" + args.u.split("/")[2] + directory)
         else:
             print(directory)
