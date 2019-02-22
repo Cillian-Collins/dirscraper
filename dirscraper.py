@@ -18,9 +18,10 @@ parser = argparse.ArgumentParser(description='Extract GET parameters from javasc
 parser.add_argument('-u', help='URL of the website to scan.')
 parser.add_argument('-o', help='Output file (for results).', nargs="?")
 parser.add_argument('-s', help='Silent mode (results not printed).', action="store_true")
+parser.add_argument('-d', help='Includes domain name in output.', action="store_true")
+
 args = parser.parse_args()
 
-linkArr = [args.u]
 dirArr = []
 url = args.u + "/"
 r = requests.get(url)
@@ -60,8 +61,20 @@ for link in linkArr:
 for directory in list(set(dirArr)):
     if args.o:
         output = open(args.o, "a")
-        output.write(directory + "\n")
+        if args.d:
+            if args.u[len(args.u) - 1] == "/":
+                output.write(args.u[0:len(args.u) - 1] + directory + "\n")
+            else:
+                output.write(args.u + directory + "\n")
+        else:
+            output.write(directory + "\n")
     if args.s:
         pass
     else:
-        print(directory)
+        if args.d:
+            if args.u[len(args.u) - 1] == "/":
+                print(args.u[0:len(args.u) - 1] + directory)
+            else:
+                print(args.u + directory)
+        else:
+            print(directory)
