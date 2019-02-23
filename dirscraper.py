@@ -1,5 +1,10 @@
 import requests, os, argparse, re
 from bs4 import BeautifulSoup
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
 def regex(content):
     pattern = "(\"|')(\/[\w\d?\/&=#.!:_-]{1,})(\"|')"
     matches = re.findall(pattern, content)
@@ -25,7 +30,7 @@ args = parser.parse_args()
 linkArr = [args.u]
 dirArr = []
 url = args.u + "/"
-r = requests.get(url)
+r = requests.get(url,verify=False)
 soup = BeautifulSoup(r.text, 'html5lib')
 scripts = soup.find_all('script')
 for script in scripts:
@@ -38,7 +43,7 @@ for script in scripts:
     except:
         pass
 for link in linkArr:
-    res = requests.get(link)
+    res = requests.get(link,verify=False)
     out = regex(res.text).split("\n")
     for line in out:
         pathArr = line.strip().split("/")
