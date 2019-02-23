@@ -47,22 +47,19 @@ for link in linkArr:
     out = regex(res.text).split("\n")
     for line in out:
         pathArr = line.strip().split("/")
-        if line[0] == "/" and line[1] == "/":
-            pass
-        else:
-            path = ""
-            for i in range(len(pathArr)):
-                if i == len(pathArr) - 1:
-                    if "." in pathArr[i]:
-                        pass
-                    else:
-                         path += pathArr[i] + "/"
+        path = ""
+        for i in range(len(pathArr)):
+            if i == len(pathArr) - 1:
+                if "." in pathArr[i]:
+                    pass
                 else:
-                    path += pathArr[i] + "/"
-            if path != "/" and path != "//":
-                dirArr.append(path.replace("//", "/").split("#")[0])
+                     path += pathArr[i] + "/"
             else:
-                pass
+                  path += pathArr[i] + "/"
+        if path != "/" and path != "//":
+            dirArr.append(path.replace("//", "/").split("#")[0])
+        else:
+            pass
 
 for directory in list(set(dirArr)):
     if args.o:
