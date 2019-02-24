@@ -27,12 +27,19 @@ parser.add_argument('-d', help='Includes domain name in output.', action="store_
 
 args = parser.parse_args()
 
-linkArr = [args.u]
-dirArr = []
 url = args.u + "/"
-r = requests.get(url,verify=False)
+try:
+    r = requests.get(url, verify=False)
+except requests.exceptions.MissingSchema:
+    args.u = "http://" + args.u
+    url = args.u + "/"
+    r = requests.get(url, verify=False)
 soup = BeautifulSoup(r.text, 'html5lib')
 scripts = soup.find_all('script')
+
+linkArr = [args.u]
+dirArr = []
+
 for script in scripts:
     try:
         if script['src'][0] == "/" and script['src'][1] != "/":
@@ -43,7 +50,7 @@ for script in scripts:
     except:
         pass
 for link in linkArr:
-    res = requests.get(link,verify=False)
+    res = requests.get(link, verify=False)
     out = regex(res.text).split("\n")
     for line in out:
         pathArr = line.strip().split("/")
